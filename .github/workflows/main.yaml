@@ -2,7 +2,7 @@ name: House Price Prediction Analysis
 
 on: 
   pull_request:
-  push:
+  # push:
   workflow_dispatch:
 
 jobs:
@@ -34,8 +34,19 @@ jobs:
     - name: Run Python script
       run: python model/main.py
 
-    - name: Display model metrics and images using CML
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Display model metrics and images using CML
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #   run: |
+    #     cml-send-comment '## Model Metrics\n| Model | Mean MSE |\n|---|---|\n| Linear Regression | 123.45 |\n\n![Pairplot](pairplot.png)\n\n![Correlation Matrix](correlation_heatmap.png)'
+    
+    - name: Set Git Config
       run: |
-        cml-send-comment '## Model Metrics\n| Model | Mean MSE |\n|---|---|\n| Linear Regression | 123.45 |\n\n![Pairplot](pairplot.png)\n\n![Correlation Matrix](correlation_heatmap.png)'
+        git config --global user.email "actions@github.com"
+        git config --global user.name "GitHub Actions"
+
+    - name: Commit report.md
+      run: |
+        git add report.md
+        git commit -m "Update report.md [skip ci]" || echo "No changes to commit"
+        git push

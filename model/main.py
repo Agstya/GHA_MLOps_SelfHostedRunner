@@ -111,3 +111,8 @@ if __name__ == "__main__":
         file.write(pairplot_markdown)
         file.write("\n\n## Correlation Heatmap\n")
         file.write(correlation_heatmap)
+
+    # Read the contents of report.md and print it
+    with open('report.md', 'r') as file:
+        report_contents = file.read()
+        print(report_contents)

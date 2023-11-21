@@ -9,6 +9,8 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error
 import markdown
+import io
+import base64
 
 def generate_synthetic_data():
     """Generate synthetic data for house price prediction."""
@@ -73,15 +75,24 @@ def evaluate_models(data):
 
     return model_metrics
 
+
 def visualize_eda(data):
-    """Create EDA visualizations and return them as Markdown-formatted images."""
     # Create pairplot
-    pairplot_markdown = markdown.markdown(plt.show(sns.pairplot(data)))
+    pairplot = sns.pairplot(data)
+    pairplot_buffer = io.BytesIO()
+    pairplot.savefig(pairplot_buffer, format='png')
+    pairplot_encoded = base64.b64encode(pairplot_buffer.getvalue()).decode('utf-8')
+    pairplot_markdown = f"![Pairplot](data:image/png;base64,{pairplot_encoded})"
 
     # Create correlation heatmap
     correlation_matrix = data.corr()
-    correlation_heatmap = markdown.markdown(plt.show(sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f")))
-    plt.close()  # Close plot window
+    heatmap = sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f")
+    heatmap_buffer = io.BytesIO()
+    heatmap.figure.savefig(heatmap_buffer, format='png')
+    heatmap_encoded = base64.b64encode(heatmap_buffer.getvalue()).decode('utf-8')
+    correlation_heatmap = f"![Correlation Heatmap](data:image/png;base64,{heatmap_encoded})"
+
+    plt.close('all')  # Close all plots
 
     return pairplot_markdown, correlation_heatmap
 
@@ -91,3 +102,12 @@ if __name__ == "__main__":
 
     # Visualize EDA and generate Markdown-formatted images
     pairplot_markdown, correlation_heatmap = visualize_eda(house_data)
+    # Use pairplot_markdown and correlation_heatmap as needed...
+
+    # Write Markdown content to report.md
+    with open('report.md', 'w') as file:
+        file.write("# EDA Report\n\n")
+        file.write("## Pairplot Visualization\n")
+        file.write(pairplot_markdown)
+        file.write("\n\n## Correlation Heatmap\n")
+        file.write(correlation_heatmap)

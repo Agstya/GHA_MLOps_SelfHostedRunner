@@ -23,7 +23,7 @@ jobs:
         pip install numpy pandas seaborn matplotlib scikit-learn
 
     - name: Run Python script
-      run: python house_price_prediction.py
+      run: model/main.py
 
     - name: Display model metrics and images using CML
       env:

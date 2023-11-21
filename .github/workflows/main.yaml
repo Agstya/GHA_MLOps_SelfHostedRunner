@@ -20,8 +20,11 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install numpy pandas seaborn matplotlib scikit-learn
-
+        pip install -r requirements.txt
+        
+    - name: Change permissions of model/main.py
+      run: chmod +x model/main.py
+      
     - name: Run Python script
       run: model/main.py
 

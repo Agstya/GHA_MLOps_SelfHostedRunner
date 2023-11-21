@@ -8,6 +8,7 @@ from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error
+import markdown
 
 def generate_synthetic_data():
     """Generate synthetic data for house price prediction."""
@@ -34,22 +35,27 @@ def generate_synthetic_data():
         'Price': price
     })
     # Identify and handle categorical columns (for example 'Location' is a categorical column)
-    categorical_columns = ['Location']  
+    categorical_columns = ['Location']
 
     # Perform one-hot encoding for categorical columns
     data = pd.get_dummies(data, columns=categorical_columns)
-    
+
     return data
 
 def evaluate_models(data):
     """Evaluate different regression models using cross-validation and return model metrics."""
     X = data.drop('Price', axis=1)
     y = data['Price']
+
+    # Standardize numerical features
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
+
+    # Apply PCA to reduce dimensionality
     pca = PCA(n_components=3)
     X_pca = pca.fit_transform(X_scaled)
 
+    # Define and evaluate different regression models
     models = {
         'Linear Regression': LinearRegression(),
         'Random Forest': RandomForestRegressor(n_estimators=100, random_state=42),
@@ -68,31 +74,20 @@ def evaluate_models(data):
     return model_metrics
 
 def visualize_eda(data):
-    """Create EDA visualizations and save them as images."""
-    sns.pairplot(data)
-    plt.title('Pairplot - Relationships between Variables')
-    plt.savefig('pairplot.png')  # Save pairplot as an image
-    plt.close()
+    """Create EDA visualizations and return them as Markdown-formatted images."""
+    # Create pairplot
+    pairplot_markdown = markdown.markdown(plt.show(sns.pairplot(data)))
 
+    # Create correlation heatmap
     correlation_matrix = data.corr()
-    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f")
-    plt.title('Correlation Matrix')
-    plt.savefig('correlation_heatmap.png')  # Save heatmap as an image
-    plt.close()
+    correlation_heatmap = markdown.markdown(plt.show(sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f")))
+    plt.close()  # Close plot window
+
+    return pairplot_markdown, correlation_heatmap
 
 if __name__ == "__main__":
     # Generate synthetic data
     house_data = generate_synthetic_data()
 
-    # Visualize EDA
-    visualize_eda(house_data)
-
-    # Evaluate models and get model metrics
-    model_metrics = evaluate_models(house_data)
-
-    # Display model metrics
-    print("## Model Metrics")
-    print("| Model                 | Mean MSE   |")
-    print("|-----------------------|------------|")
-    for model_name, mse_mean in model_metrics.items():
-        print(f"| {model_name.ljust(23)} | {mse_mean:.2f}    |")
+    # Visualize EDA and generate Markdown-formatted images
+    pairplot_markdown, correlation_heatmap

@@ -114,6 +114,7 @@ if __name__ == "__main__":
         file.write(correlation_heatmap)
 
     # Print the file path where report.md is located
+    file_path = 'report.md'
     print(f"File created at path: {os.path.abspath(file_path)}")
 
     

@@ -2,7 +2,7 @@ name: House Price Prediction Analysis
 
 on: 
   pull_request:
-  # push:
+  push:
   workflow_dispatch:
 
 jobs:

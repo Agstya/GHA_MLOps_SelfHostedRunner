@@ -38,6 +38,8 @@ def generate_synthetic_data():
 
     # Perform one-hot encoding for categorical columns
     data = pd.get_dummies(data, columns=categorical_columns)
+    
+    return data
 
 def evaluate_models(data):
     """Evaluate different regression models using cross-validation and return model metrics."""

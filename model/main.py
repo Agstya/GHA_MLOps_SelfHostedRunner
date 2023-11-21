@@ -90,4 +90,4 @@ if __name__ == "__main__":
     house_data = generate_synthetic_data()
 
     # Visualize EDA and generate Markdown-formatted images
-    pairplot_markdown, correlation_heatmap
+    pairplot_markdown, correlation_heatmap = visualize_eda(house_data)

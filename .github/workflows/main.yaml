@@ -47,6 +47,6 @@ jobs:
 
     - name: Commit report.md
       run: |
-        git add report.md
+        git add model/report.md
         git commit -m "Update report.md [skip ci]" || echo "No changes to commit"
         git push

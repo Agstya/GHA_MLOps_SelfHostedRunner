@@ -33,8 +33,11 @@ def generate_synthetic_data():
         'YearBuilt': year_built,
         'Price': price
     })
+    # Identify and handle categorical columns (for example 'Location' is a categorical column)
+    categorical_columns = ['Location']  
 
-    return data
+    # Perform one-hot encoding for categorical columns
+    data = pd.get_dummies(data, columns=categorical_columns)
 
 def evaluate_models(data):
     """Evaluate different regression models using cross-validation and return model metrics."""

@@ -11,6 +11,7 @@ from sklearn.metrics import mean_squared_error
 import markdown
 import io
 import base64
+import os
 
 def generate_synthetic_data():
     """Generate synthetic data for house price prediction."""
@@ -112,6 +113,10 @@ if __name__ == "__main__":
         file.write("\n\n## Correlation Heatmap\n")
         file.write(correlation_heatmap)
 
+    # Print the file path where report.md is located
+    print(f"File created at path: {os.path.abspath(file_path)}")
+
+    
     # Read the contents of report.md and print it
     with open('report.md', 'r') as file:
         report_contents = file.read()

@@ -1,5 +1,7 @@
 import numpy as np
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 from sklearn.model_selection import cross_val_score
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
@@ -73,9 +75,32 @@ def evaluate_models(data):
         print("=" * 40)
 
 
+def visualize_eda(data):
+    """Create EDA visualizations and save them as an image."""
+    # Create pairplot for relationships between variables
+    sns.pairplot(data)
+    plt.title('Pairplot - Relationships between Variables')
+    plt.savefig('pairplot.png')  # Save pairplot as an image
+    plt.close()
+
+    # Correlation matrix heatmap
+    correlation_matrix = data.corr()
+    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f")
+    plt.title('Correlation Matrix')
+    plt.savefig('correlation_heatmap.png')  # Save heatmap as an image
+    plt.close()
+
+    # Summary statistics table visualization (optional)
+    summary_table = data.describe()
+    summary_table.to_csv('summary_statistics.csv')  # Save summary statistics as a CSV file
+
+
 if __name__ == "__main__":
     # Generate synthetic data
     house_data = generate_synthetic_data()
+
+    # Visualize EDA
+    visualize_eda(house_data)
 
     # Evaluate models
     evaluate_models(house_data)

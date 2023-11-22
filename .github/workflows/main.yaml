@@ -1,10 +1,9 @@
-name: House Price Prediction Analysis
-
+name: House Price Prediction Analysis Workflow
 
 on: 
   push:
     branches:
-      - main
+      # - main
       - 'experiment*'
       - 'releases/*'
   pull_request: 

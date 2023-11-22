@@ -1,8 +1,21 @@
 name: House Price Prediction Analysis
 
+
 on: 
-  pull_request:
   push:
+    branches:
+      - main
+      - 'experiment*'
+      - 'releases/*'
+  pull_request: 
+    branches:
+      - main
+      - 'experiment*'
+      - 'releases/*'
+    
+  # label:
+  #    types: [created, edited]
+     
   workflow_dispatch:
 
 jobs:
@@ -42,9 +55,6 @@ jobs:
     #   run: |
     #     cml-send-comment '## Model Metrics\n| Model | Mean MSE |\n|---|---|\n| Linear Regression | 123.45 |\n\n![Pairplot](pairplot.png)\n\n![Correlation Matrix](correlation_heatmap.png)'
     
-
-
-
     # Show file path and report contents
     - name: Show file path and report contents
       run: |

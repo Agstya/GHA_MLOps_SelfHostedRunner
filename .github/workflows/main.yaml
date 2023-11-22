@@ -37,7 +37,10 @@ jobs:
       run: |
         # git checkout -b experiment-1 # Replace 'new-branch-name' with your desired branch name
         # git branch  # Optional: Check the current branch
-        git checkout experiment-1
+        # git checkout experiment-1
+        git status
+        git branch
+        
         
     - name: Set up Python
       uses: actions/setup-python@v2

@@ -18,12 +18,12 @@ def generate_synthetic_data():
     np.random.seed(42)
 
     # Generating multiple features
-    area = np.random.randint(800, 5000, 10000)
-    bedrooms = np.random.randint(1, 6, 10000)
-    bathrooms = np.random.randint(1, 4, 10000)
-    location = np.random.choice(['Downtown', 'Suburb', 'Rural'], 10000)
-    lot_size = np.random.randint(3000, 15000, 10000)
-    year_built = np.random.randint(1970, 2022, 10000)
+    area = np.random.randint(800, 5000, 100)
+    bedrooms = np.random.randint(1, 6, 100)
+    bathrooms = np.random.randint(1, 4, 100)
+    location = np.random.choice(['Downtown', 'Suburb', 'Rural'], 100)
+    lot_size = np.random.randint(3000, 15000, 100)
+    year_built = np.random.randint(1970, 2022, 100)
 
     price = 100 * area + 20000 * bedrooms + 15000 * bathrooms + 3000 * lot_size + (2022 - year_built) * 500 \
             + np.random.randn(100) * 50000
@@ -98,12 +98,9 @@ def visualize_eda(data):
     return pairplot_markdown, correlation_heatmap
 
 if __name__ == "__main__":
-    # Generate synthetic data
     house_data = generate_synthetic_data()
 
-    # Visualize EDA and generate Markdown-formatted images
     pairplot_markdown, correlation_heatmap = visualize_eda(house_data)
-    # Use pairplot_markdown and correlation_heatmap as needed...
 
     # Write Markdown content to report.md
     with open('report.md', 'w') as file:
@@ -113,11 +110,20 @@ if __name__ == "__main__":
         file.write("\n\n## Correlation Heatmap\n")
         file.write(correlation_heatmap)
 
+        # Add a section for model metrics
+        file.write("\n\n## Model Metrics\n")
+        file.write("| Model | Mean Squared Error |\n")
+        file.write("|-------|--------------------|\n")
+
+        # Evaluate models and add results to the Markdown table
+        model_metrics = evaluate_models(house_data)
+        for model, mse in model_metrics.items():
+            file.write(f"| {model} | {mse:.2f} |\n")
+
     # Print the file path where report.md is located
     file_path = 'report.md'
     print(f"File created at path: {os.path.abspath(file_path)}")
 
-    
     # Read the contents of report.md and print it
     with open('report.md', 'r') as file:
         report_contents = file.read()

@@ -33,7 +33,7 @@ The `build` job runs on the `ubuntu-agastya` runner and performs the following s
 ```bash
 pip install --upgrade pip
 pip install -r requirements.txt
-
+```
 
 6. **Change Permissions of main.py:** Modifies the permissions of the `model/main.py` file to make it executable using the `chmod +x model/main.py` command.
 
@@ -47,19 +47,21 @@ pip install -r requirements.txt
 
 11. **Git Add, Commit, and Push:** Adds the updated report file (`report.md`) to the staging area, commits the changes with the message `Update report.md [skip ci]`, and pushes the changes to the `origin` remote repository on the `experiment-1` branch using the following commands:
 
-bash
+```bash
 git add report.md
 git commit -m "Update report.md [skip ci]"
 git push origin experiment-1
-
+```
 
 12. **Commit report.md:** Commits the changes made to the `report.md` file with the message `Update report.md [skip ci]` using the following commands:
 
-bash
+```bash
 git add report.md
 git commit -m "Update report.md [skip ci]"
 git push
-
+```
 This workflow effectively automates the process of generating and updating the house price prediction report, ensuring consistency and reproducibility.
+
+
 
 

@@ -98,12 +98,9 @@ def visualize_eda(data):
     return pairplot_markdown, correlation_heatmap
 
 if __name__ == "__main__":
-    # Generate synthetic data
     house_data = generate_synthetic_data()
 
-    # Visualize EDA and generate Markdown-formatted images
     pairplot_markdown, correlation_heatmap = visualize_eda(house_data)
-    # Use pairplot_markdown and correlation_heatmap as needed...
 
     # Write Markdown content to report.md
     with open('report.md', 'w') as file:
@@ -113,11 +110,42 @@ if __name__ == "__main__":
         file.write("\n\n## Correlation Heatmap\n")
         file.write(correlation_heatmap)
 
+        # Add a section for model metrics
+        file.write("\n\n## Model Metrics\n")
+        file.write("| Model | Mean Squared Error |\n")
+        file.write("|-------|--------------------|\n")
+
+        model_metrics = evaluate_models(house_data)
+        for model, mse in model_metrics.items():
+            file.write(f"| {model} | {mse:.2f} |\n")
+
+        # Add image files directly to the Markdown
+        file.write("\n\n## Visualizations\n")
+        file.write("### Pairplot Visualization\n")
+        file.write("![Pairplot](pairplot.png)\n")
+        file.write("### Correlation Heatmap\n")
+        file.write("![Correlation Heatmap](correlation_heatmap.png)\n")
+
+    # Save the plots separately as image files
+    pairplot = sns.pairplot(house_data)
+    pairplot.savefig('pairplot.png')
+    plt.close(pairplot.fig)
+
+    correlation_matrix = house_data.corr()
+    heatmap = sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f")
+    heatmap.figure.savefig('correlation_heatmap.png')
+    plt.close(heatmap.figure)
+
     # Print the file path where report.md is located
     file_path = 'report.md'
     print(f"File created at path: {os.path.abspath(file_path)}")
 
-    
+    # Read the contents of report.md and print it
+    with open('report.md', 'r') as file:
+        report_contents = file.read()
+        print(report_contents)
+    print(f"File created at path: {os.path.abspath(file_path)}")
+
     # Read the contents of report.md and print it
     with open('report.md', 'r') as file:
         report_contents = file.read()

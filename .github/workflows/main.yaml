@@ -4,13 +4,13 @@ on:
   push:
     branches:
       # - main
-      - 'experiment*'
+      # - 'experiment*'
       - 'releases/*'
   pull_request: 
     branches:
       - main
-      - 'experiment*'
-      - 'releases/*'
+      # - 'experiment*'
+      # - 'releases/*'
     
   # label:
   #    types: [created, edited]
@@ -19,13 +19,33 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-agastya
+    #runs-on: ubuntu-agastya
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
       with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Set Git Config
+      run: |
+        git config --global user.email "actions@github.com"
+        git config --global user.name "GitHub Actions"
+
+    # Create a new branch or checkout an existing branch
+    - name: Create or checkout branch
+      run: |
+        # git checkout -b experiment-1 # Replace 'new-branch-name' with your desired branch name
+        # git branch  # Optional: Check the current branch
+        # git checkout experiment-1
+        git status
+        git branch
+        git fetch origin
+        git branch -a
+        git checkout experiment-1
+        git branch
+        
+        
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
@@ -61,17 +81,7 @@ jobs:
         echo "Report contents:"
         cat "${{ github.workspace }}/report.md"
         
-    - name: Set Git Config
-      run: |
-        git config --global user.email "actions@github.com"
-        git config --global user.name "GitHub Actions"
         
-    # Create a new branch or checkout an existing branch
-    - name: Create or checkout branch
-      run: |
-        # git checkout -b experiment-1 # Replace 'new-branch-name' with your desired branch name
-        # git branch  # Optional: Check the current branch
-        git checkout experiment-1
     # Git commands to add, commit, and push changes on the branch
     - name: Git add, commit, and push
       run: |

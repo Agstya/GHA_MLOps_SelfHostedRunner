@@ -18,12 +18,12 @@ def generate_synthetic_data():
     np.random.seed(42)
 
     # Generating multiple features
-    area = np.random.randint(800, 5000, 100)
-    bedrooms = np.random.randint(1, 6, 100)
-    bathrooms = np.random.randint(1, 4, 100)
-    location = np.random.choice(['Downtown', 'Suburb', 'Rural'], 100)
-    lot_size = np.random.randint(3000, 15000, 100)
-    year_built = np.random.randint(1970, 2022, 100)
+    area = np.random.randint(800, 5000, 10000)
+    bedrooms = np.random.randint(1, 6, 10000)
+    bathrooms = np.random.randint(1, 4, 10000)
+    location = np.random.choice(['Downtown', 'Suburb', 'Rural'], 10000)
+    lot_size = np.random.randint(3000, 15000, 10000)
+    year_built = np.random.randint(1970, 2022, 10000)
 
     price = 100 * area + 20000 * bedrooms + 15000 * bathrooms + 3000 * lot_size + (2022 - year_built) * 500 \
             + np.random.randn(100) * 50000

@@ -40,6 +40,10 @@ jobs:
         # git checkout experiment-1
         git status
         git branch
+        git fetch origin
+        git branch -a
+        git checkout experiment-1
+        git branch
         
         
     - name: Set up Python

@@ -4,13 +4,13 @@ on:
   push:
     branches:
       # - main
-      - 'experiment*'
+      # - 'experiment*'
       - 'releases/*'
   pull_request: 
     branches:
       - main
-      - 'experiment*'
-      - 'releases/*'
+      # - 'experiment*'
+      # - 'releases/*'
     
   # label:
   #    types: [created, edited]

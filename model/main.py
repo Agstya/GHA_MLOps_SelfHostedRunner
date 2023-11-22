@@ -102,13 +102,24 @@ if __name__ == "__main__":
 
     pairplot_markdown, correlation_heatmap = visualize_eda(house_data)
 
+    # Save the pairplot and correlation heatmap as image files
+    pairplot = sns.pairplot(house_data)
+    pairplot.savefig('pairplot.png')
+    plt.close(pairplot.fig)
+
+    correlation_matrix = house_data.corr()
+    heatmap = sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f")
+    heatmap.figure.savefig('correlation_heatmap.png')
+    plt.close(heatmap.figure)
+
     # Write Markdown content to report.md
     with open('report.md', 'w') as file:
         file.write("# EDA Report\n\n")
         file.write("## Pairplot Visualization\n")
-        file.write(pairplot_markdown)
-        file.write("\n\n## Correlation Heatmap\n")
-        file.write(correlation_heatmap)
+        file.write("![Pairplot](pairplot.png)\n\n")
+        file.write("## Correlation Heatmap\n")
+        file.write("![Correlation Heatmap](correlation_heatmap.png)\n\n")
+
 
         # Add a section for model metrics
         file.write("\n\n## Model Metrics\n")
@@ -118,23 +129,6 @@ if __name__ == "__main__":
         model_metrics = evaluate_models(house_data)
         for model, mse in model_metrics.items():
             file.write(f"| {model} | {mse:.2f} |\n")
-
-        # Add image files directly to the Markdown
-        file.write("\n\n## Visualizations\n")
-        file.write("### Pairplot Visualization\n")
-        file.write("![Pairplot](pairplot.png)\n")
-        file.write("### Correlation Heatmap\n")
-        file.write("![Correlation Heatmap](correlation_heatmap.png)\n")
-
-    # Save the plots separately as image files
-    pairplot = sns.pairplot(house_data)
-    pairplot.savefig('pairplot.png')
-    plt.close(pairplot.fig)
-
-    correlation_matrix = house_data.corr()
-    heatmap = sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f")
-    heatmap.figure.savefig('correlation_heatmap.png')
-    plt.close(heatmap.figure)
 
     # Print the file path where report.md is located
     file_path = 'report.md'

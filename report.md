@@ -11,6 +11,6 @@
 ## Model Metrics
 | Model | Mean Squared Error |
 |-------|--------------------|
-| Linear Regression | 2908073482.61 |
-| Random Forest | 123802748037259.88 |
-| Gradient Boosting | 155688867786355.03 |
+| Linear Regression | 3162404577.30 |
+| Random Forest | 71840378438854.16 |
+| Gradient Boosting | 76601785486233.88 |

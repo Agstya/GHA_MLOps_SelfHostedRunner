@@ -15,7 +15,7 @@ import os
 
 def generate_synthetic_data():
     """Generate synthetic data for house price prediction."""
-    np.random.seed(42)
+    np.random.seed(46)
 
     # Generating multiple features
     area = np.random.randint(800, 5000, 100)
